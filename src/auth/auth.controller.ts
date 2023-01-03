@@ -12,7 +12,7 @@ export class AuthController {
     return await this.authService.validateToken(token);
   }
 
-  @Post('/signUp')
+  @Post('signup')
   async signUp(@Body() userDTO: CreateUserDTO) {
     const userCreated = await this.authService.signUp(userDTO);
     if (userCreated) {
@@ -22,7 +22,7 @@ export class AuthController {
     }
   }
 
-  @Post('/signIn')
+  @Post('signin')
   async signIn(@Body() credentials: UserLoginDTO) {
     return await this.authService.signIn(credentials);
   }
