@@ -1,5 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { AddressDTO } from './dto/address.dto';
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -24,26 +31,9 @@ export class UserEntity {
   @Column()
   phone?: string;
 
-  @Column({ nullable: false })
-  zipCode: string;
-
-  @Column({ nullable: false })
-  street: string;
-
-  @Column({ nullable: false })
-  number: string;
-
-  @Column({ nullable: false })
-  neighborhood: string;
-
-  @Column({ nullable: false })
-  city: string;
-
-  @Column({ nullable: false })
-  state: string;
-
-  @Column()
-  complement?: string;
+  @OneToOne(() => AddressDTO, { cascade: true })
+  @JoinColumn({ name: 'address' })
+  address: AddressDTO;
 
   async checkPassword(password: string): Promise<boolean> {
     const hash = await bcrypt.hash(password, this.salt);

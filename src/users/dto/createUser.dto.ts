@@ -1,12 +1,16 @@
+import { Type } from 'class-transformer';
 import {
   IsString,
   MinLength,
   IsEmail,
   IsNotEmpty,
   IsOptional,
-  Matches,
+  ValidateNested,
+  IsArray,
+  ArrayNotEmpty,
 } from 'class-validator';
 import { Match } from 'src/core/constraints/match.decorator';
+import { AddressDTO } from './address.dto';
 
 export class CreateUserDTO {
   @IsNotEmpty({ message: 'O nome completo é obrigatório!' })
@@ -40,31 +44,11 @@ export class CreateUserDTO {
   @IsOptional()
   readonly phone?: string | null;
 
-  @IsNotEmpty()
-  @IsString()
-  readonly zipCode: string;
-
-  @IsNotEmpty()
-  @IsString()
-  readonly street: string;
-
-  @IsNotEmpty()
-  @IsString()
-  readonly number: string;
-
-  @IsNotEmpty()
-  @IsString()
-  readonly neighborhood: string;
-
-  @IsNotEmpty()
-  @IsString()
-  readonly city: string;
-
-  @IsNotEmpty()
-  @IsString()
-  readonly state: string;
-
-  @IsString()
-  @IsOptional()
-  readonly complement?: string | null;
+  @ValidateNested()
+  @IsArray()
+  @Type(() => AddressDTO)
+  @ArrayNotEmpty({
+    message: 'As suas informaçoes de endereço são obrigatórias!',
+  })
+  readonly address: AddressDTO[];
 }

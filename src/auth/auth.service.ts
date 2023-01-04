@@ -5,6 +5,7 @@ import { UserEntity } from 'src/users/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { AddressDTO } from 'src/users/dto/address.dto';
 
 @Injectable()
 export class AuthService {
@@ -17,20 +18,7 @@ export class AuthService {
 
   async signUp(userDTO: CreateUserDTO) {
     return new Promise(async (resolve) => {
-      const {
-        fullName,
-        photoUrl,
-        email,
-        password,
-        phone,
-        zipCode,
-        street,
-        number,
-        neighborhood,
-        city,
-        state,
-        complement,
-      } = userDTO;
+      const { fullName, photoUrl, email, password, phone, address } = userDTO;
       const user = this.userRepository.create();
       user.salt = await bcrypt.genSalt();
       user.fullName = fullName;
@@ -38,13 +26,7 @@ export class AuthService {
       user.email = email;
       user.password = await this.hashpassword(password, user.salt);
       user.phone = phone;
-      user.zipCode = zipCode;
-      user.street = street;
-      user.number = number;
-      user.neighborhood = neighborhood;
-      user.city = city;
-      user.state = state;
-      user.complement = complement;
+      user.address = address;
       const userCreated = this.userRepository.save(user);
 
       delete user.password;
