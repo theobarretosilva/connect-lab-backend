@@ -1,5 +1,5 @@
-import { Body, Controller, Post, Get, Headers } from '@nestjs/common';
-import { HttpStatus } from '@nestjs/common/enums';
+import { Body, Controller, Post } from '@nestjs/common';
+import { HttpStatus } from '@nestjs/common';
 import { HttpException } from '@nestjs/common/exceptions';
 import { CreateUserDTO } from 'src/users/dto/createUser.dto';
 import { UserLoginDTO } from 'src/users/dto/userLogin.dto';
@@ -9,10 +9,17 @@ import { AuthService } from './auth.service';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Get('token')
-  async verifyToken(@Headers('authorization') token: string) {
-    return await this.authService.validateToken(token);
-  }
+  // @Get('/token')
+  // async verifyToken(@Headers('authorization') token) {
+  //   try {
+  //     const validate = await this.authService.validateToken(
+  //       token.split('Bearer ')[1],
+  //     );
+  //     return { validate };
+  //   } catch (error) {
+  //     throw new ForbiddenException();
+  //   }
+  // }
 
   @Post('/signup')
   async signUp(@Body() userDTO: CreateUserDTO) {

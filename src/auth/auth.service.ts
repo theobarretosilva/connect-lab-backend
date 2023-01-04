@@ -17,7 +17,7 @@ export class AuthService {
 
   async signUp(userDTO: CreateUserDTO) {
     return new Promise(async (resolve) => {
-      const { fullName, photoUrl, email, password, phone, address } = userDTO;
+      const { fullName, photoUrl, email, password, phone } = userDTO;
       const user = this.userRepository.create();
       user.salt = await bcrypt.genSalt();
       user.fullName = fullName;
