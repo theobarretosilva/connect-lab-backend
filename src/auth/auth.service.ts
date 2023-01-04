@@ -32,6 +32,7 @@ export class AuthService {
         complement,
       } = userDTO;
       const user = this.userRepository.create();
+      user.salt = await bcrypt.genSalt();
       user.fullName = fullName;
       user.photoUrl = photoUrl;
       user.email = email;
@@ -44,7 +45,6 @@ export class AuthService {
       user.city = city;
       user.state = state;
       user.complement = complement;
-      user.salt = await bcrypt.genSalt();
       const userCreated = this.userRepository.save(user);
 
       delete user.password;
