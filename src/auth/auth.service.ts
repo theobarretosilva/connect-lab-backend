@@ -5,6 +5,7 @@ import { UserEntity } from 'src/users/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { AddressDTO } from 'src/users/dto/address.dto';
 
 @Injectable()
 export class AuthService {
@@ -25,7 +26,7 @@ export class AuthService {
       user.email = email;
       user.password = await this.hashpassword(password, user.salt);
       user.phone = phone;
-      // user.address = address;
+      user.address = AddressDTO[0];
       const userCreated = this.userRepository.save(user);
 
       delete user.password;

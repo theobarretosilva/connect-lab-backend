@@ -10,6 +10,7 @@ import {
   ArrayNotEmpty,
 } from 'class-validator';
 import { Match } from 'src/core/constraints/match.decorator';
+import { AddressDTO } from './address.dto';
 
 export class CreateUserDTO {
   @IsNotEmpty({ message: 'O nome completo é obrigatório!' })
@@ -17,8 +18,7 @@ export class CreateUserDTO {
   readonly fullName: string;
 
   @IsString({ message: 'O link da foto deve ser uma string!' })
-  @IsOptional()
-  readonly photoUrl?: string =
+  readonly photoUrl: string =
     'https://github.com/theobarretosilva/Connect-Lab/blob/main/Connect-Lab/src/assets/imgs/userGenerico.png?raw=true';
 
   @IsNotEmpty({ message: 'O email é obrigatório!' })
@@ -39,15 +39,13 @@ export class CreateUserDTO {
   @Match('password', { message: 'As senhas não estão iguais, revise-as!' })
   readonly confirmPassword: string;
 
-  @IsString({ message: 'O telefone deve ser uma string!' })
-  @IsOptional()
-  readonly phone?: string | null;
+  readonly phone: string | null;
 
-  // @ValidateNested()
-  // @IsArray()
-  // @Type(() => AddressDTO)
-  // @ArrayNotEmpty({
-  //   message: 'As suas informaçoes de endereço são obrigatórias!',
-  // })
-  // readonly address: AddressDTO[];
+  @ValidateNested()
+  @IsArray()
+  @Type(() => AddressDTO)
+  @ArrayNotEmpty({
+    message: 'As suas informaçoes de endereço são obrigatórias!',
+  })
+  readonly address: AddressDTO[];
 }

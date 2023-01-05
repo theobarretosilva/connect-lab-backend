@@ -9,18 +9,6 @@ import { AuthService } from './auth.service';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  // @Get('/token')
-  // async verifyToken(@Headers('authorization') token) {
-  //   try {
-  //     const validate = await this.authService.validateToken(
-  //       token.split('Bearer ')[1],
-  //     );
-  //     return { validate };
-  //   } catch (error) {
-  //     throw new ForbiddenException();
-  //   }
-  // }
-
   @Post('/signup')
   async signUp(@Body() userDTO: CreateUserDTO) {
     try {
@@ -32,12 +20,12 @@ export class AuthController {
       if (err.code == 23505) {
         throw new HttpException({ reason: err.detail }, HttpStatus.CONFLICT);
       }
-      if (err.code == 23502) {
-        throw new HttpException(
-          { reason: 'Um campo obrigatório não foi preenchido' },
-          HttpStatus.BAD_REQUEST,
-        );
-      }
+      // if (err.code == 23502) {
+      //   throw new HttpException(
+      //     { reason: 'Um campo obrigatório não foi preenchido' },
+      //     HttpStatus.BAD_REQUEST,
+      //   );
+      // }
       throw new HttpException({ reason: err }, HttpStatus.BAD_REQUEST);
     }
   }

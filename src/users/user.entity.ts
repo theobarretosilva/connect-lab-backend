@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { AddressDTO } from './dto/address.dto';
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -30,9 +31,8 @@ export class UserEntity {
   @Column()
   phone?: string;
 
-  // @OneToOne(() => AddressDTO, { cascade: true })
-  // @JoinColumn({ name: 'address' })
-  // address: AddressDTO;
+  @OneToOne(() => AddressDTO)
+  address: AddressDTO;
 
   async checkPassword(password: string): Promise<boolean> {
     const hash = await bcrypt.hash(password, this.salt);

@@ -25,7 +25,5 @@ export class AddressDTO {
   @IsString({ message: 'O estado deve ser uma string!' })
   readonly state: string;
 
-  @IsString()
-  @IsOptional()
-  readonly complement?: string | null;
+  readonly complement: string | null;
 }
