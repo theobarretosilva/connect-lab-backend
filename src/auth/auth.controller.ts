@@ -12,7 +12,7 @@ export class AuthController {
   @Post('/signup')
   async signUp(@Body() userDTO: CreateUserDTO) {
     try {
-      await this.authService.signUp(userDTO);
+      await this.authService.signUp(userDTO, userDTO.address);
       return {
         message: 'Cadastro realizado',
       };

@@ -6,7 +6,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { AddressDTO } from './dto/address.dto';
+import { AddressDTO } from '../dto/address.dto';
+import { UsersAddressEntity } from './address.entity';
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -17,7 +18,7 @@ export class UserEntity {
   fullName: string;
 
   @Column()
-  photoUrl?: string | null;
+  photoUrl: string | null;
 
   @Column({ unique: true, nullable: false })
   email: string;
@@ -29,10 +30,11 @@ export class UserEntity {
   salt: string;
 
   @Column()
-  phone?: string;
+  phone: string | null;
 
-  @OneToOne(() => AddressDTO)
-  address: AddressDTO;
+  @OneToOne(() => UsersAddressEntity)
+  @JoinColumn()
+  address: number;
 
   async checkPassword(password: string): Promise<boolean> {
     const hash = await bcrypt.hash(password, this.salt);

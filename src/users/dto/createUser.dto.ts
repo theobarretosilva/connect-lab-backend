@@ -42,10 +42,6 @@ export class CreateUserDTO {
   readonly phone: string | null;
 
   @ValidateNested()
-  @IsArray()
   @Type(() => AddressDTO)
-  @ArrayNotEmpty({
-    message: 'As suas informaçoes de endereço são obrigatórias!',
-  })
-  readonly address: AddressDTO[];
+  readonly address: AddressDTO;
 }

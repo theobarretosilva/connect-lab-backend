@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm/data-source';
-import { UserEntity } from 'src/users/user.entity';
+import { UserEntity } from 'src/users/entities/user.entity';
 
 export const authProviders = [
   {
