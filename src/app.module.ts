@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from './auth/auth.module';
 import { authProviders } from './auth/auth.providers';
+import { JwtStrategy } from './auth/guards/jwt.strategy';
 import { databaseProviders } from './core/database/database.providers';
 import { DevicesModule } from './devices/devices.module';
 import { userProviders } from './users/user.providers';
@@ -20,6 +21,11 @@ import { UsersModule } from './users/users.module';
     AuthModule,
   ],
   controllers: [],
-  providers: [...databaseProviders, ...userProviders, ...authProviders],
+  providers: [
+    ...databaseProviders,
+    ...userProviders,
+    ...authProviders,
+    JwtStrategy,
+  ],
 })
 export class AppModule {}

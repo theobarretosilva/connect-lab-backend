@@ -14,7 +14,7 @@ export class AuthController {
     try {
       await this.authService.signUp(userDTO, userDTO.address);
       return {
-        message: 'Cadastro realizado',
+        message: 'Cadastro realizado!',
       };
     } catch (err) {
       if (err.code == 23505) {

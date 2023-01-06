@@ -17,7 +17,6 @@ export class CreateUserDTO {
   @IsString({ message: 'O nome completo deve ser uma string!' })
   readonly fullName: string;
 
-  @IsString({ message: 'O link da foto deve ser uma string!' })
   readonly photoUrl: string =
     'https://github.com/theobarretosilva/Connect-Lab/blob/main/Connect-Lab/src/assets/imgs/userGenerico.png?raw=true';
 
