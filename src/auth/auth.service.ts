@@ -20,18 +20,9 @@ export class AuthService {
 
   async signUp(userDTO: CreateUserDTO, addressDTO: AddressDTO) {
     return new Promise(async (resolve) => {
-      const { fullName, photoUrl, email, password, phone } = userDTO;
       const { zipCode, street, number, neighborhood, city, state, complement } =
         addressDTO;
-      const user = this.userRepository.create();
       const address = this.addressRepository.create();
-      user.salt = await bcrypt.genSalt();
-      user.fullName = fullName;
-      user.photoUrl = photoUrl;
-      user.email = email;
-      user.password = await this.hashpassword(password, user.salt);
-      user.phone = phone;
-      user.address = address._id;
       address.zipCode = zipCode;
       address.street = street;
       address.number = number;
@@ -39,14 +30,22 @@ export class AuthService {
       address.city = city;
       address.state = state;
       address.complement = complement;
-      const userCreated = this.userRepository.save(user);
       const userAddressCreated = this.addressRepository.save(address);
+      resolve(userAddressCreated);
 
+      const { fullName, photoUrl, email, password, phone } = userDTO;
+      const user = this.userRepository.create();
+      user.salt = await bcrypt.genSalt();
+      user.fullName = fullName;
+      user.photoUrl = photoUrl;
+      user.email = email;
+      user.password = await this.hashpassword(password, user.salt);
+      user.phone = phone;
+      user.address = address._id;
+      const userCreated = this.userRepository.save(user);
       delete user.password;
       delete user.salt;
-
       resolve(userCreated);
-      resolve(userAddressCreated);
     });
   }
 
