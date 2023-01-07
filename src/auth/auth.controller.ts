@@ -11,22 +11,16 @@ export class AuthController {
 
   @Post('/signup')
   async signUp(@Body() userDTO: CreateUserDTO) {
-    try {
+    if (await this.authService.findOne(userDTO.email)) {
+      throw new HttpException(
+        { reason: 'Usuário já cadastrado!' },
+        HttpStatus.CONFLICT,
+      );
+    } else {
       await this.authService.signUp(userDTO, userDTO.address);
       return {
-        message: 'Cadastro realizado!',
+        message: 'Usuário cadastrado com sucesso!',
       };
-    } catch (err) {
-      if (err.code == 23505) {
-        throw new HttpException({ reason: err.detail }, HttpStatus.CONFLICT);
-      }
-      // if (err.code == 23502) {
-      //   throw new HttpException(
-      //     { reason: 'Um campo obrigatório não foi preenchido' },
-      //     HttpStatus.BAD_REQUEST,
-      //   );
-      // }
-      throw new HttpException({ reason: err }, HttpStatus.BAD_REQUEST);
     }
   }
 

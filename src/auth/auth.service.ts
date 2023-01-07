@@ -1,9 +1,4 @@
-import {
-  ConflictException,
-  Inject,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDTO } from 'src/users/dto/createUser.dto';
 import { UserLoginDTO } from 'src/users/dto/userLogin.dto';
 import { UserEntity } from 'src/users/entities/user.entity';
@@ -26,47 +21,31 @@ export class AuthService {
   async signUp(userDTO: CreateUserDTO, addressDTO: AddressDTO) {
     return new Promise(async (resolve) => {
       const { fullName, photoUrl, email, password, phone } = userDTO;
-      const userExists = await this.userRepository.findOne({
-        where: {
-          email: email,
-        },
-      });
-      if (!userExists) {
-        const {
-          zipCode,
-          street,
-          number,
-          neighborhood,
-          city,
-          state,
-          complement,
-        } = addressDTO;
-        const address = this.addressRepository.create();
-        address.zipCode = zipCode;
-        address.street = street;
-        address.number = number;
-        address.neighborhood = neighborhood;
-        address.city = city;
-        address.state = state;
-        address.complement = complement;
-        const userAddressCreated = this.addressRepository.save(address);
-        resolve(userAddressCreated);
+      const { zipCode, street, number, neighborhood, city, state, complement } =
+        addressDTO;
+      const address = this.addressRepository.create();
+      address.zipCode = zipCode;
+      address.street = street;
+      address.number = number;
+      address.neighborhood = neighborhood;
+      address.city = city;
+      address.state = state;
+      address.complement = complement;
+      const userAddressCreated = this.addressRepository.save(address);
+      resolve(userAddressCreated);
 
-        const user = this.userRepository.create();
-        user.salt = await bcrypt.genSalt();
-        user.fullName = fullName;
-        user.photoUrl = photoUrl;
-        user.email = email;
-        user.password = await this.hashpassword(password, user.salt);
-        user.phone = phone;
-        user.address = address._id;
-        const userCreated = this.userRepository.save(user);
-        // delete user.password;
-        // delete user.salt;
-        resolve(userCreated);
-      } else {
-        throw new ConflictException('Usuário já cadastrado!');
-      }
+      const user = this.userRepository.create();
+      user.salt = await bcrypt.genSalt();
+      user.fullName = fullName;
+      user.photoUrl = photoUrl;
+      user.email = email;
+      user.password = await this.hashpassword(password, user.salt);
+      user.phone = phone;
+      user.address = address._id;
+      const userCreated = this.userRepository.save(user);
+      // delete user.password;
+      // delete user.salt;
+      resolve(userCreated);
     });
   }
 
@@ -116,6 +95,15 @@ export class AuthService {
         });
       }
     });
+  }
+
+  async findOne(email: string) {
+    const userExists = await this.userRepository.findOne({
+      where: {
+        email: email,
+      },
+    });
+    return userExists;
   }
 
   private async hashpassword(password: string, salt: string): Promise<string> {

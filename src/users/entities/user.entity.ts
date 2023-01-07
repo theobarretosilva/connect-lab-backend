@@ -6,7 +6,6 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { AddressDTO } from '../dto/address.dto';
 import { UsersAddressEntity } from './address.entity';
 
 @Entity({ name: 'users' })
@@ -29,7 +28,7 @@ export class UserEntity {
   @Column()
   salt: string;
 
-  @Column()
+  @Column({ nullable: true })
   phone: string | null;
 
   @OneToOne(() => UsersAddressEntity)
