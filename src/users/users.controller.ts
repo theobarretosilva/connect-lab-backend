@@ -5,9 +5,10 @@ import {
   UseGuards,
   Request,
   HttpStatus,
+  Get,
 } from '@nestjs/common';
 import { HttpException } from '@nestjs/common/exceptions/http.exception';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/core/auth/guards/jwt-auth.guard';
 import { ChangePasswordDTO } from './dto/changePassword.dto';
 import { UsersService } from './users.service';
 
@@ -29,5 +30,14 @@ export class UsersController {
         HttpStatus.BAD_REQUEST,
       );
     }
+  }
+
+  // @UseGuards(JwtAuthGuard)
+  @Get('/profile')
+  async getInfoUserProfile(@Request() request) {
+    return await this.userService.getUserInfo(request.user);
+    // } catch (error) {
+    //   throw new HttpException({ reason: error }, HttpStatus.);
+    // }
   }
 }

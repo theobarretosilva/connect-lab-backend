@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
-import { AuthModule } from './auth/auth.module';
-import { authProviders } from './auth/auth.providers';
-import { JwtStrategy } from './auth/guards/jwt.strategy';
+import { AuthModule } from './core/auth/auth.module';
+import { authProviders } from './core/auth/auth.providers';
+import { JwtStrategy } from './core/auth/guards/jwt.strategy';
 import { databaseProviders } from './core/database/database.providers';
 import { DevicesModule } from './devices/devices.module';
 import { userProviders } from './users/user.providers';
