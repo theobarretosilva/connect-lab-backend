@@ -16,11 +16,15 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(private userService: UsersService) {}
 
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Post('/changePassword')
   async changePassword(@Request() request, @Body() body: ChangePasswordDTO) {
+    console.log(request.user);
     try {
-      await this.userService.changePassword(request.user, body);
+      await this.userService.changePassword(
+        request.headers.authorization,
+        body,
+      );
       return {
         message: 'Senha alterada com sucesso!',
       };
@@ -35,7 +39,7 @@ export class UsersController {
   // @UseGuards(JwtAuthGuard)
   @Get('/profile')
   async getInfoUserProfile(@Request() request) {
-    return await this.userService.getUserInfo(request.user);
+    return await this.userService.getUserInfo(request.headers.authorization);
     // } catch (error) {
     //   throw new HttpException({ reason: error }, HttpStatus.);
     // }

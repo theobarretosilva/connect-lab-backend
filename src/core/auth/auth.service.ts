@@ -31,6 +31,8 @@ export class AuthService {
       address.city = city;
       address.state = state;
       address.complement = complement;
+      const userAddressCreated = this.addressRepository.save(address);
+      resolve(userAddressCreated);
 
       const user = this.userRepository.create();
       user.salt = await bcrypt.genSalt();
@@ -40,10 +42,10 @@ export class AuthService {
       user.password = await this.hashpassword(password, user.salt);
       user.phone = phone;
       user.address = address._id;
-      const userAddressCreated = this.addressRepository.save(address);
       const userCreated = this.userRepository.save(user);
+      // delete user.password;
+      // delete user.salt;
       resolve(userCreated);
-      resolve(userAddressCreated);
     });
   }
 

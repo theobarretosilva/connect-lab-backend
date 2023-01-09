@@ -40,6 +40,7 @@ export class CreateUserDTO {
 
   readonly phone: string | null;
 
+  @IsNotEmpty({ message: 'O endereço é obrigatório!' })
   @ValidateNested()
   @Type(() => AddressDTO)
   readonly address: AddressDTO;

@@ -41,29 +41,26 @@ export class UsersService {
   }
 
   async getUserInfo(userPayload: JwtPayload) {
-    const foundUser = await this.userRepository.findOne({
-      where: {
-        _id: userPayload.id,
-      },
+    const foundUser = await this.userRepository.findOneBy({
+      email: userPayload.email,
     });
-    const foundAddress = await this.addressRepository.findOne({
-      where: {
-        _id: foundUser.address,
-      },
+    const foundAddress = await this.addressRepository.findOneBy({
+      _id: foundUser.address,
     });
-
-    const firstName = foundUser.fullName.split(' ');
+    if (foundUser) {
+      console.log(foundUser);
+    }
 
     if (foundUser.phone == null) {
       return {
         photoUrl: foundUser.photoUrl,
-        userName: firstName,
+        userName: foundUser.fullName,
         email: foundUser.email,
       };
     } else {
       return {
         photoUrl: foundUser.photoUrl,
-        userName: firstName,
+        userName: foundUser.fullName,
         email: foundUser.email,
         phone: foundUser.phone,
         address: foundAddress,
