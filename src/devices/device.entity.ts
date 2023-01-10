@@ -1,4 +1,5 @@
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import { UserEntity } from 'src/users/entities/user.entity';
+import { Column, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 export class DeviceEntity {
   @PrimaryGeneratedColumn()
@@ -28,6 +29,7 @@ export class DeviceEntity {
   @Column({ nullable: false })
   local: string;
 
-  @Column({ nullable: false })
-  user_id: number;
+  @ManyToOne(() => UserEntity)
+  @JoinColumn()
+  user_id: UserEntity;
 }
