@@ -5,7 +5,6 @@ import { ChangePasswordDTO } from './dto/changePassword.dto';
 import { UsersAddressEntity } from './entities/address.entity';
 import { UserEntity } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
-import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UsersService {

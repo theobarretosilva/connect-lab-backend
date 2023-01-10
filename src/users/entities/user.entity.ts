@@ -7,6 +7,8 @@ import {
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { UsersAddressEntity } from './address.entity';
+import { DeviceEntity } from 'src/devices/device.entity';
+import { OneToMany } from 'typeorm/decorator/relations/OneToMany';
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -34,6 +36,10 @@ export class UserEntity {
   @OneToOne(() => UsersAddressEntity)
   @JoinColumn()
   address: UsersAddressEntity;
+
+  @OneToMany(() => DeviceEntity, (device) => device.user_id)
+  @JoinColumn()
+  devices: DeviceEntity;
 
   async checkPassword(password: string): Promise<boolean> {
     const hash = await bcrypt.hash(password, this.salt);

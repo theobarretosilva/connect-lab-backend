@@ -32,4 +32,8 @@ export class DeviceDTO {
   @IsNotEmpty({ message: 'O local do dispositivo é obrigatório!' })
   @IsString({ message: 'O local do dispositivo deve ser uma string!' })
   local: string;
+
+  @IsNotEmpty({ message: 'O agrupamento do dispositivo é obrigatório!' })
+  @IsString({ message: 'O agrupamento do dispositivo deve ser uma string!' })
+  grouping: string;
 }
