@@ -12,7 +12,10 @@ export class DevicesService {
 
   async addDevice(userPayload: any, deviceDTO: DeviceDTO) {
     return new Promise(async (resolve) => {
+      const { name, type, madeBy, isOn, info, ipAddress, macAddress, local } =
+        deviceDTO;
+      const device = this.deviceRepository.create();
       
-    })
+    });
   }
 }
