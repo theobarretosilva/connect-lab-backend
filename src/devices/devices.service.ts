@@ -10,5 +10,9 @@ export class DevicesService {
     private deviceRepository: Repository<DeviceEntity>,
   ) {}
 
-  // async addDevice(deviceDTO: DeviceDTO)
+  async addDevice(userPayload: any, deviceDTO: DeviceDTO) {
+    return new Promise(async (resolve) => {
+      
+    })
+  }
 }

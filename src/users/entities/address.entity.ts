@@ -23,6 +23,6 @@ export class UsersAddressEntity {
   @Column()
   state: string;
 
-  @Column()
+  @Column({ nullable: true })
   complement: string | null;
 }

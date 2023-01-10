@@ -8,15 +8,19 @@ import {
   Get,
 } from '@nestjs/common';
 import { HttpException } from '@nestjs/common/exceptions/http.exception';
+import { JwtService } from '@nestjs/jwt';
 import { JwtAuthGuard } from 'src/core/auth/guards/jwt-auth.guard';
 import { ChangePasswordDTO } from './dto/changePassword.dto';
 import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private userService: UsersService) {}
+  constructor(
+    private userService: UsersService,
+    private jwtService: JwtService,
+  ) {}
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Post('/changePassword')
   async changePassword(@Request() request, @Body() body: ChangePasswordDTO) {
     console.log(request.user);
@@ -36,12 +40,14 @@ export class UsersController {
     }
   }
 
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get('/profile')
   async getInfoUserProfile(@Request() request) {
-    return await this.userService.getUserInfo(request.headers.authorization);
-    // } catch (error) {
-    //   throw new HttpException({ reason: error }, HttpStatus.);
-    // }
+    try {
+      const payload = this.jwtService.decode(request.headers.authorization);
+      return await this.userService.getUserInfo(payload);
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

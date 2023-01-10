@@ -5,6 +5,7 @@ import { ChangePasswordDTO } from './dto/changePassword.dto';
 import { UsersAddressEntity } from './entities/address.entity';
 import { UserEntity } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UsersService {
@@ -15,10 +16,7 @@ export class UsersService {
     private addressRepository: Repository<UsersAddressEntity>,
   ) {}
 
-  async changePassword(
-    userPayload: JwtPayload,
-    changePasswordDTO: ChangePasswordDTO,
-  ) {
+  async changePassword(userPayload: any, changePasswordDTO: ChangePasswordDTO) {
     return new Promise(async (resolve) => {
       const { email, oldPassword, newPassword } = changePasswordDTO;
 
@@ -40,22 +38,22 @@ export class UsersService {
     });
   }
 
-  async getUserInfo(userPayload: JwtPayload) {
-    const foundUser = await this.userRepository.findOneBy({
-      email: userPayload.email,
+  async getUserInfo(userPayload: any) {
+    const foundUser = await this.userRepository.findOne({
+      where: {
+        email: userPayload.email,
+      },
+      relations: {
+        address: true,
+      },
     });
-    const foundAddress = await this.addressRepository.findOneBy({
-      _id: foundUser.address,
-    });
-    if (foundUser) {
-      console.log(foundUser);
-    }
 
     if (foundUser.phone == null) {
       return {
         photoUrl: foundUser.photoUrl,
         userName: foundUser.fullName,
         email: foundUser.email,
+        address: foundUser.address,
       };
     } else {
       return {
@@ -63,7 +61,7 @@ export class UsersService {
         userName: foundUser.fullName,
         email: foundUser.email,
         phone: foundUser.phone,
-        address: foundAddress,
+        address: foundUser.address,
       };
     }
   }

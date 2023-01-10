@@ -41,7 +41,7 @@ export class AuthService {
       user.email = email;
       user.password = await this.hashpassword(password, user.salt);
       user.phone = phone;
-      user.address = address._id;
+      user.address = address;
       const userCreated = this.userRepository.save(user);
       // delete user.password;
       // delete user.salt;

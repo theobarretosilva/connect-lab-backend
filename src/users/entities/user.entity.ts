@@ -33,7 +33,7 @@ export class UserEntity {
 
   @OneToOne(() => UsersAddressEntity)
   @JoinColumn()
-  address: number;
+  address: UsersAddressEntity;
 
   async checkPassword(password: string): Promise<boolean> {
     const hash = await bcrypt.hash(password, this.salt);
