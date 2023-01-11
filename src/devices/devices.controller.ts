@@ -20,7 +20,7 @@ export class DevicesController {
     private jwtService: JwtService,
   ) {}
 
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Post('/addDevice')
   async addDevice(@Body() deviceDTO: DeviceDTO, @Request() request) {
     try {
@@ -37,7 +37,7 @@ export class DevicesController {
     }
   }
 
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get('/detailDevice/:id')
   async detailDevice(@Param('id') id: string, @Request() request) {
     try {
@@ -46,7 +46,7 @@ export class DevicesController {
     } catch (error) {}
   }
 
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get('/allDevices')
   async getAllDevices(@Request() request, @Query('local') local?) {
     try {
