@@ -59,4 +59,8 @@ export class DevicesService {
 
     return foundDevice;
   }
+
+  async allDevices(local: string, userPayload: any) {
+
+  }
 }

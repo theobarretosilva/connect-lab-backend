@@ -6,6 +6,7 @@ import {
   Body,
   Get,
   Param,
+  Query,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { JwtAuthGuard } from 'src/core/auth/guards/jwt-auth.guard';
@@ -42,6 +43,15 @@ export class DevicesController {
     try {
       const payload = this.jwtService.decode(request.headers.authorization);
       return await this.deviceService.detailDevice(id, payload);
+    } catch (error) {}
+  }
+
+  // @UseGuards(JwtAuthGuard)
+  @Get('/allDevices')
+  async getAllDevices(@Query('local') local = '', @Request() request) {
+    try {
+      const payload = this.jwtService.decode(request.headers.authorization);
+      return await this.deviceService.allDevices(local, payload);
     } catch (error) {}
   }
 }
