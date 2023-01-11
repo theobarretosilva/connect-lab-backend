@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { JwtPayload } from 'src/utils/jwtPayload.utils';
 import { Repository } from 'typeorm';
 import { ChangePasswordDTO } from './dto/changePassword.dto';
 import { UsersAddressEntity } from './entities/address.entity';
@@ -32,7 +31,8 @@ export class UsersService {
         (await foundUser.checkPassword(oldPassword))
       ) {
         foundUser.password = hashPassword;
-        await this.userRepository.save(foundUser);
+        const savePassword = await this.userRepository.save(foundUser);
+        resolve(savePassword);
       }
     });
   }

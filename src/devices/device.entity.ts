@@ -1,15 +1,11 @@
 import { UserEntity } from 'src/users/entities/user.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'devices' })
 export class DeviceEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
+  @ManyToOne(() => UserEntity, (user) => user.devices)
+  @JoinColumn()
   _id: string;
 
   @Column({ nullable: false })
@@ -39,7 +35,5 @@ export class DeviceEntity {
   @Column({ nullable: false })
   grouping: string;
 
-  @ManyToOne(() => UserEntity, (user) => user.devices)
-  @JoinColumn()
   user_id: UserEntity;
 }

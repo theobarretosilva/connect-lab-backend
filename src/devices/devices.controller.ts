@@ -12,10 +12,11 @@ export class DevicesController {
   ) {}
 
   // @UseGuards(JwtAuthGuard)
-  @Post()
-  async addDevice(@Request() request, @Body() body: DeviceDTO) {
+  @Post('/addDevice')
+  async addDevice(@Body() deviceDTO: DeviceDTO, @Request() request) {
     try {
-      await this.deviceService.addDevice(request.headers.authorization, body);
+      const payload = this.jwtService.decode(request.headers.authorization);
+      await this.deviceService.addDevice(payload, deviceDTO);
       return {
         message: 'Dispositivo adicionado com sucesso!',
       };

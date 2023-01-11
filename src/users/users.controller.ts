@@ -23,7 +23,6 @@ export class UsersController {
   // @UseGuards(JwtAuthGuard)
   @Post('/changePassword')
   async changePassword(@Request() request, @Body() body: ChangePasswordDTO) {
-    console.log(request.user);
     try {
       await this.userService.changePassword(
         request.headers.authorization,

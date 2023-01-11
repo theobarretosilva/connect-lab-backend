@@ -37,7 +37,7 @@ export class UserEntity {
   @JoinColumn()
   address: UsersAddressEntity;
 
-  @OneToMany(() => DeviceEntity, (device) => device.user_id)
+  @OneToMany(() => DeviceEntity, (device) => device._id)
   @JoinColumn()
   devices: DeviceEntity;
 

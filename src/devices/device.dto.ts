@@ -1,6 +1,12 @@
 import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 
 export class DeviceDTO {
+  @IsNotEmpty({
+    message: 'Você deve definir o id do dispositivo para vinculação!',
+  })
+  @IsString({ message: 'O id do dispositivo deve ser uma string!' })
+  _id: string;
+
   @IsNotEmpty({ message: 'O nome do dispositivo é obrigatório!' })
   @IsString({ message: 'O nome do dispositivo deve ser uma string!' })
   name: string;

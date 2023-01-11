@@ -13,6 +13,7 @@ export class DevicesService {
   async addDevice(userPayload: any, deviceDTO: DeviceDTO) {
     return new Promise(async (resolve) => {
       const {
+        _id,
         name,
         type,
         madeBy,
@@ -24,6 +25,7 @@ export class DevicesService {
         grouping,
       } = deviceDTO;
       const device = this.deviceRepository.create();
+      device._id = _id;
       device.name = name;
       device.type = type;
       device.madeBy = madeBy;
