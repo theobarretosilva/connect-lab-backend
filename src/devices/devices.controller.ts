@@ -1,4 +1,12 @@
-import { Controller, UseGuards, Post, Request, Body } from '@nestjs/common';
+import {
+  Controller,
+  UseGuards,
+  Post,
+  Request,
+  Body,
+  Get,
+  Param,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { JwtAuthGuard } from 'src/core/auth/guards/jwt-auth.guard';
 import { DeviceDTO } from './device.dto';
@@ -26,5 +34,14 @@ export class DevicesController {
         cause: error,
       };
     }
+  }
+
+  // @UseGuards(JwtAuthGuard)
+  @Get('/detailDevice/:id')
+  async detailDevice(@Param('id') id: string, @Request() request) {
+    try {
+      const payload = this.jwtService.decode(request.headers.authorization);
+      return await this.deviceService.detailDevice(id, payload);
+    } catch (error) {}
   }
 }

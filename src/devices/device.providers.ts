@@ -8,4 +8,10 @@ export const devicesProviders = [
       dataSource.getRepository(DeviceEntity),
     inject: ['DATA_SOURCE'],
   },
+  {
+    provide: 'USERS_REPOSITORY',
+    useFactory: (dataSource: DataSource) =>
+      dataSource.getRepository(DeviceEntity),
+    inject: ['DATA_SOURCE'],
+  },
 ];

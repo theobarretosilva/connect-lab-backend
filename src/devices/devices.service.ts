@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { UserEntity } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { DeviceDTO } from './device.dto';
 import { DeviceEntity } from './device.entity';
@@ -8,6 +9,8 @@ export class DevicesService {
   constructor(
     @Inject('DEVICES_REPOSITORY')
     private deviceRepository: Repository<DeviceEntity>,
+    @Inject('USERS_REPOSITORY')
+    private userRepository: Repository<UserEntity>,
   ) {}
 
   async addDevice(userPayload: any, deviceDTO: DeviceDTO) {
@@ -39,5 +42,21 @@ export class DevicesService {
       const deviceCreated = this.deviceRepository.save(device);
       resolve(deviceCreated);
     });
+  }
+
+  async detailDevice(idDevice: string, userPayload: any) {
+    const foundDevice = await this.deviceRepository.findOne({
+      where: {
+        _id: idDevice,
+        user_id: userPayload.id,
+      },
+    });
+
+    delete foundDevice._id;
+    delete foundDevice.grouping;
+    delete foundDevice.local;
+    delete foundDevice.user_id;
+
+    return foundDevice;
   }
 }
