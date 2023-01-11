@@ -39,7 +39,7 @@ export class UsersController {
     }
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Get('/profile')
   async getInfoUserProfile(@Request() request) {
     try {

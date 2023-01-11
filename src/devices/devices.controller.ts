@@ -48,10 +48,10 @@ export class DevicesController {
 
   // @UseGuards(JwtAuthGuard)
   @Get('/allDevices')
-  async getAllDevices(@Query('local') local = '', @Request() request) {
+  async getAllDevices(@Request() request, @Query('local') local?) {
     try {
       const payload = this.jwtService.decode(request.headers.authorization);
-      return await this.deviceService.allDevices(local, payload);
+      return await this.deviceService.allDevices(payload, local);
     } catch (error) {}
   }
 }

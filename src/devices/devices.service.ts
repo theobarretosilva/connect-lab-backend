@@ -60,7 +60,19 @@ export class DevicesService {
     return foundDevice;
   }
 
-  async allDevices(local: string, userPayload: any) {
+  async allDevices(userPayload: any, local?: string) {
+    const foundDevices = await this.deviceRepository.find({
+      where: {
+        user_id: userPayload.id,
+      },
+    });
 
+    if (local) {
+      return foundDevices.filter((value) => {
+        return value.local.toLowerCase().includes(local);
+      });
+    } else {
+      return foundDevices;
+    }
   }
 }
