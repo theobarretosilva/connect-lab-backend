@@ -1,6 +1,5 @@
 import {
   Controller,
-  UseGuards,
   Post,
   Request,
   Body,
@@ -9,7 +8,6 @@ import {
   Query,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { JwtAuthGuard } from 'src/core/auth/guards/jwt-auth.guard';
 import { DeviceDTO } from './device.dto';
 import { DevicesService } from './devices.service';
 
@@ -20,7 +18,6 @@ export class DevicesController {
     private jwtService: JwtService,
   ) {}
 
-  @UseGuards(JwtAuthGuard)
   @Post('/addDevice')
   async addDevice(@Body() deviceDTO: DeviceDTO, @Request() request) {
     try {
@@ -37,7 +34,6 @@ export class DevicesController {
     }
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('/detailDevice/:id')
   async detailDevice(@Param('id') id: string, @Request() request) {
     try {
@@ -46,7 +42,6 @@ export class DevicesController {
     } catch (error) {}
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('/allDevices')
   async getAllDevices(@Request() request, @Query('local') local?) {
     try {

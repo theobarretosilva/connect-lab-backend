@@ -2,14 +2,12 @@ import {
   Body,
   Controller,
   Post,
-  UseGuards,
   Request,
   HttpStatus,
   Get,
 } from '@nestjs/common';
 import { HttpException } from '@nestjs/common/exceptions/http.exception';
 import { JwtService } from '@nestjs/jwt';
-import { JwtAuthGuard } from 'src/core/auth/guards/jwt-auth.guard';
 import { ChangePasswordDTO } from './dto/changePassword.dto';
 import { UsersService } from './users.service';
 
@@ -20,7 +18,6 @@ export class UsersController {
     private jwtService: JwtService,
   ) {}
 
-  // @UseGuards(JwtAuthGuard)
   @Post('/changePassword')
   async changePassword(@Request() request, @Body() body: ChangePasswordDTO) {
     try {
@@ -39,7 +36,6 @@ export class UsersController {
     }
   }
 
-  // @UseGuards(JwtAuthGuard)
   @Get('/profile')
   async getInfoUserProfile(@Request() request) {
     try {
