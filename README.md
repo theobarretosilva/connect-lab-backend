@@ -41,5 +41,134 @@ DB_NAME=connect-lab
 ### Cadastrar usuário:
 
 ```
-POST: 
+POST: http://localhost:3000/auth/signup
+Headers: {
+	"Content-Type": "application/json"
+}
+
+Body: {
+	"fullName": "Théo Barreto Silva",
+	"photoUrl": "https://avatars.githubusercontent.com/u/103266889?v=4",
+	"email": "emailteste@gmail.com",
+	"password": "123456789",
+	"confirmPassword": "123456789",
+	"phone": (48) 99999-9999,
+	"address": {
+		"zipCode": "88101-250",
+		"street": "Rua mauricio",
+		"number": 537,
+		"neighborhood": "Campinas",
+		"city": "São José",
+		"state": "Belém",
+		"complement": "Apto. 1405"
+	}
+}
+```
+**Resultado:**
+
+```
+{
+	"message": "Usuário cadastrado com sucesso!"
+}
+```
+
+### Fazer login com email e senha:
+
+```
+POST: http://localhost:3000/auth/signin
+Headers: {
+	"Content-Type": "application/json"
+}
+
+Body: {
+	"email": "emailteste@gmail.com",
+	"password": "123456789"
+}
+```
+**Resultado:**
+
+```
+{
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6IlRow6lvIiwicGhvdG9VcmwiOiJodHRwczovL2F2YXRhcnMuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvMTAzMjY2ODg5P3Y9NCIsImVtYWlsIjoianVsaWFub2Zsb3NzMjJAZ21haWwuY29tIiwiaWF0IjoxNjczNDY0MDI3LCJleHAiOjE2NzM0NjQwODd9.t8YzRH0-d9ua024xmpJG9r1nWdlWQWR-GRLrxyNGEbQ"
+}
+```
+
+## Usuário
+
+### Receber os dados de perfil do usuário:
+
+```
+GET: http://localhost:3000/users/profile
+Headers: {
+	"Authorization": "Bearer token"
+}
+```
+**Resultado:**
+
+```
+{
+	"photoUrl": "https://avatars.githubusercontent.com/u/103266889?v=4",
+	"userName": "Théo Barreto Silva",
+	"email": "emailteste@gmail.com",
+	"phone": (48) 99999-9999,
+	"address": {
+		"_id": 4,
+		"zipCode": "88101-250",
+		"street": "Rua mauricio",
+		"number": 537,
+		"neighborhood": "Campinas",
+		"city": "São José",
+		"state": "Belém",
+		"complement": "Apto. 1405"
+	}
+}
+```
+
+### Mudar a senha do usuário:
+
+```
+POST: http://localhost:3000/users/changePassword
+Headers: {
+	"Authorization": "Bearer token"
+	"Content-Type": "application/json"
+}
+
+Body: {
+	"email": "emailteste@gmail.com",
+	"oldPassword": "senhaantiga",
+	"newPassword": "novasenha",
+	"confirmNewPassword": "novasenha"
+}
+```
+**Resultado:**
+
+```
+{
+	"message": "Senha alterada com sucesso!"
+}
+```
+
+## Dispositivos
+
+### Adicionar dispositivo ao usuário:
+
+```
+POST: http://localhost:3000/devices/addDevice
+Headers: {
+	"Authorization": "Bearer token"
+	"Content-Type": "application/json"
+}
+
+Body: {
+	"_id": "631b2f046f2d2f24a7c0c948",
+	"name": "Lâmpada LED",
+	"type": "Energia",
+	"madeBy": "Intelbras",
+	"isOn": false,
+	"info": "Lâmpada da suite 1",
+	"ipAddress": "127.0.0.1",
+	"macAddress": "127.0.0.1",
+	"local": "Quarto",
+	"grouping": "Casa de praia"
+}
 ```
