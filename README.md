@@ -160,7 +160,7 @@ Headers: {
 }
 
 Body: {
-	"_id": "631b2f046f2d2f24a7c0c948",
+	"_id": 25,
 	"name": "Lâmpada LED",
 	"type": "Energia",
 	"madeBy": "Intelbras",
@@ -170,5 +170,12 @@ Body: {
 	"macAddress": "127.0.0.1",
 	"local": "Quarto",
 	"grouping": "Casa de praia"
+}
+```
+**Resultado**
+
+```
+{
+	"message": "Dispositivo adicionado com sucesso!"
 }
 ```
