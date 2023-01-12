@@ -20,16 +20,15 @@ export class DevicesController {
 
   @Post('/addDevice')
   async addDevice(@Body() deviceDTO: DeviceDTO, @Request() request) {
-    try {
+    if (await this.deviceService.findOne(deviceDTO._id)) {
+      return {
+        message: 'Um dispositivo com esse _id já foi cadastrado!',
+      };
+    } else {
       const payload = this.jwtService.decode(request.headers.authorization);
       await this.deviceService.addDevice(payload, deviceDTO);
       return {
         message: 'Dispositivo adicionado com sucesso!',
-      };
-    } catch (error) {
-      return {
-        message: 'Algo deu errado!',
-        cause: error.code,
       };
     }
   }

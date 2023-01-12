@@ -37,10 +37,6 @@ export class UserEntity {
   @JoinColumn()
   address: UsersAddressEntity;
 
-  @OneToMany(() => DeviceEntity, (device) => device._id)
-  @JoinColumn()
-  devices: DeviceEntity;
-
   async checkPassword(password: string): Promise<boolean> {
     const hash = await bcrypt.hash(password, this.salt);
     return hash === this.password;

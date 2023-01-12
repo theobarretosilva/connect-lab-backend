@@ -1,6 +1,5 @@
 import { UserEntity } from 'src/users/entities/user.entity';
-import { text } from 'stream/consumers';
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
 import { JoinTable } from 'typeorm/decorator/relations/JoinTable';
 
 @Entity({ name: 'devices' })

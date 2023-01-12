@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { UserEntity } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { DeviceDTO } from './device.dto';
 import { DeviceEntity } from './device.entity';
@@ -9,8 +8,6 @@ export class DevicesService {
   constructor(
     @Inject('DEVICES_REPOSITORY')
     private deviceRepository: Repository<DeviceEntity>,
-    @Inject('USERS_REPOSITORY')
-    private userRepository: Repository<UserEntity>,
   ) {}
 
   async addDevice(userPayload: any, deviceDTO: DeviceDTO) {
@@ -74,5 +71,14 @@ export class DevicesService {
     } else {
       return foundDevices;
     }
+  }
+
+  async findOne(id: number) {
+    const foundDevice = await this.deviceRepository.findOne({
+      where: {
+        _id: id,
+      },
+    });
+    return foundDevice;
   }
 }
