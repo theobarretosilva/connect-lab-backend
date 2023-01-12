@@ -1,13 +1,12 @@
 import { UserEntity } from 'src/users/entities/user.entity';
 import { text } from 'stream/consumers';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { JoinTable } from 'typeorm/decorator/relations/JoinTable';
 
 @Entity({ name: 'devices' })
 export class DeviceEntity {
-  @PrimaryColumn({ type: 'varchar' })
-  @ManyToOne(() => UserEntity, (user) => user.devices)
-  @JoinColumn()
-  _id: string;
+  @PrimaryColumn()
+  _id: number;
 
   @Column({ nullable: false })
   name: string;
@@ -36,5 +35,7 @@ export class DeviceEntity {
   @Column({ nullable: false })
   grouping: string;
 
+  @ManyToOne(() => UserEntity)
+  @JoinTable()
   user_id: UserEntity;
 }

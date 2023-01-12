@@ -44,7 +44,7 @@ export class DevicesService {
     });
   }
 
-  async detailDevice(idDevice: string, userPayload: any) {
+  async detailDevice(idDevice: number, userPayload: any) {
     const foundDevice = await this.deviceRepository.findOne({
       where: {
         _id: idDevice,

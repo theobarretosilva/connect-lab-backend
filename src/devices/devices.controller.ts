@@ -35,7 +35,7 @@ export class DevicesController {
   }
 
   @Get('/detailDevice/:id')
-  async detailDevice(@Param('id') id: string, @Request() request) {
+  async detailDevice(@Param('id') id: number, @Request() request) {
     try {
       const payload = this.jwtService.decode(request.headers.authorization);
       return await this.deviceService.detailDevice(id, payload);
