@@ -29,7 +29,7 @@ export class DevicesController {
     } catch (error) {
       return {
         message: 'Algo deu errado!',
-        cause: error,
+        cause: error.code,
       };
     }
   }

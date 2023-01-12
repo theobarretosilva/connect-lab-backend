@@ -1,9 +1,10 @@
 import { UserEntity } from 'src/users/entities/user.entity';
+import { text } from 'stream/consumers';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'devices' })
 export class DeviceEntity {
-  @PrimaryColumn()
+  @PrimaryColumn({ type: 'varchar' })
   @ManyToOne(() => UserEntity, (user) => user.devices)
   @JoinColumn()
   _id: string;

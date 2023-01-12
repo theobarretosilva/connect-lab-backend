@@ -13,7 +13,7 @@ import { OneToMany } from 'typeorm/decorator/relations/OneToMany';
 @Entity({ name: 'users' })
 export class UserEntity {
   @PrimaryGeneratedColumn()
-  _id: number;
+  _id: string;
 
   @Column({ nullable: false })
   fullName: string;

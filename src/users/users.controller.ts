@@ -4,7 +4,7 @@ import {
   Request,
   HttpStatus,
   Get,
-  Put,
+  Post,
 } from '@nestjs/common';
 import { HttpException } from '@nestjs/common/exceptions/http.exception';
 import { JwtService } from '@nestjs/jwt';
@@ -18,7 +18,7 @@ export class UsersController {
     private jwtService: JwtService,
   ) {}
 
-  @Put('/changePassword')
+  @Post('/changePassword')
   async changePassword(@Request() request, @Body() body: ChangePasswordDTO) {
     try {
       await this.userService.changePassword(
