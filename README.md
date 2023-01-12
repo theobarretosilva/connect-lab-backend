@@ -41,5 +41,72 @@ DB_NAME=connect-lab
 ### Cadastrar usuário:
 
 ```
-POST: 
+POST: http://localhost:3000/auth/signup
+Headers: {
+	"Content-Type": "application/json"
+}
+
+Body: {
+	"fullName": "Théo Barreto Silva",
+	"photoUrl": "https://avatars.githubusercontent.com/u/103266889?v=4",
+	"email": "barretotheo25@gmail.com",
+	"password": "123456789",
+	"confirmPassword": "123456789",
+	"address": {
+		"zipCode": "88101-250",
+		"street": "Rua mauricio",
+		"number": 537,
+		"neighborhood": "Campinas",
+		"city": "São José",
+		"state": "Belém",
+		"complement": "Apto. 1405"
+	}
+}
+```
+**Resultado:**
+
+```
+{
+	"message": "Usuário cadastrado com sucesso!"
+}
+```
+
+### Fazer login com email e senha:
+
+```
+POST: http://localhost:3000/auth/signin
+```
+**Resultado:**
+
+```
+{
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6IlRow6lvIiwicGhvdG9VcmwiOiJodHRwczovL2F2YXRhcnMuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3UvMTAzMjY2ODg5P3Y9NCIsImVtYWlsIjoianVsaWFub2Zsb3NzMjJAZ21haWwuY29tIiwiaWF0IjoxNjczNDY0MDI3LCJleHAiOjE2NzM0NjQwODd9.t8YzRH0-d9ua024xmpJG9r1nWdlWQWR-GRLrxyNGEbQ"
+}
+```
+
+## Usuário
+
+### Receber os dados de perfil do usuário:
+
+```
+GET: http://localhost:3000/users/profile
+```
+**Resultado:**
+
+```
+{
+	"photoUrl": "https://avatars.githubusercontent.com/u/103266889?v=4",
+	"userName": "Théo Barreto Silva",
+	"email": "barretotheo25@gmail.com",
+	"address": {
+		"_id": 4,
+		"zipCode": "88101-250",
+		"street": "Rua mauricio",
+		"number": 537,
+		"neighborhood": "Campinas",
+		"city": "São José",
+		"state": "Belém",
+		"complement": "Apto. 1405"
+	}
+}
 ```
