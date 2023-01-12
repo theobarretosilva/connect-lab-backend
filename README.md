@@ -34,3 +34,12 @@ DB_PASS=postgres
 DB_NAME=connect-lab
 ```
 
+## Endpoints disponíveis:
+
+## Autenticação
+
+### Cadastrar usuário:
+
+```
+POST: 
+```
