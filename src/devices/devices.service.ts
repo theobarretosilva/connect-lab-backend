@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import { DeviceDTO } from './device.dto';
 import { DeviceEntity } from './device.entity';
@@ -8,6 +9,7 @@ export class DevicesService {
   constructor(
     @Inject('DEVICES_REPOSITORY')
     private deviceRepository: Repository<DeviceEntity>,
+    private jwtService: JwtService,
   ) {}
 
   async addDevice(userPayload: any, deviceDTO: DeviceDTO) {
@@ -80,5 +82,22 @@ export class DevicesService {
       },
     });
     return foundDevice;
+  }
+
+  async validateToken(jwtToken: string) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        resolve(
+          this.jwtService.verifyAsync(jwtToken, {
+            ignoreExpiration: false,
+          }),
+        );
+      } catch (error) {
+        reject({
+          code: 401,
+          detail: 'Token expirado!',
+        });
+      }
+    });
   }
 }

@@ -20,15 +20,23 @@ export class DevicesController {
 
   @Post('/addDevice')
   async addDevice(@Body() deviceDTO: DeviceDTO, @Request() request) {
-    if (await this.deviceService.findOne(deviceDTO._id)) {
-      return {
-        message: 'Um dispositivo com esse _id já foi cadastrado!',
-      };
+    if (
+      !(await this.deviceService.validateToken(request.headers.authorization))
+    ) {
+      if (await this.deviceService.findOne(deviceDTO._id)) {
+        return {
+          message: 'Um dispositivo com esse _id já foi cadastrado!',
+        };
+      } else {
+        const payload = this.jwtService.decode(request.headers.authorization);
+        await this.deviceService.addDevice(payload, deviceDTO);
+        return {
+          message: 'Dispositivo adicionado com sucesso!',
+        };
+      }
     } else {
-      const payload = this.jwtService.decode(request.headers.authorization);
-      await this.deviceService.addDevice(payload, deviceDTO);
       return {
-        message: 'Dispositivo adicionado com sucesso!',
+        message: 'Token expirado!',
       };
     }
   }
