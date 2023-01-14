@@ -24,10 +24,10 @@ export class UsersController {
   @Post('/changePassword')
   async changePassword(@Request() request, @Body() body: ChangePasswordDTO) {
     try {
-      await this.userService.changePassword(
-        request.headers.authorization,
-        body,
-      );
+      const authorization = request.headers.authorization;
+      const token = authorization.split('Bearer ');
+      const payload = this.jwtService.decode(token[1]);
+      await this.userService.changePassword(payload, body);
       return {
         message: 'Senha alterada com sucesso!',
       };
@@ -42,11 +42,9 @@ export class UsersController {
   @UseGuards(AuthGuard('jwt'))
   @Get('/profile')
   async getInfoUserProfile(@Request() request) {
-    try {
-      const payload = this.jwtService.decode(request.headers.authorization);
-      return await this.userService.getUserInfo(payload);
-    } catch (error) {
-      console.log(error);
-    }
+    const authorization = request.headers.authorization;
+    const token = authorization.split('Bearer ');
+    const payload = this.jwtService.decode(token[1]);
+    return await this.userService.getUserInfo(payload);
   }
 }

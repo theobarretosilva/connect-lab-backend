@@ -30,9 +30,17 @@ export class UsersService {
         foundUser.email == email &&
         (await foundUser.checkPassword(oldPassword))
       ) {
-        foundUser.password = hashPassword;
-        const savePassword = await this.userRepository.save(foundUser);
-        resolve(savePassword);
+        await this.userRepository.update(
+          {
+            _id: userPayload.id,
+          },
+          {
+            password: hashPassword,
+          },
+        );
+        // foundUser.password = hashPassword;
+        // await this.userRepository.save(foundUser);
+        // resolve(savePassword);
       }
     });
   }

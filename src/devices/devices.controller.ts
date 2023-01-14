@@ -12,6 +12,8 @@ import { AuthGuard } from '@nestjs/passport';
 import { JwtService } from '@nestjs/jwt';
 import { DeviceDTO } from './device.dto';
 import { DevicesService } from './devices.service';
+import { HttpException } from '@nestjs/common/exceptions';
+import { HttpStatus } from '@nestjs/common/enums';
 
 @Controller('devices')
 export class DevicesController {
@@ -24,9 +26,10 @@ export class DevicesController {
   @Post('/addDevice')
   async addDevice(@Body() deviceDTO: DeviceDTO, @Request() request) {
     if (await this.deviceService.findOne(deviceDTO._id)) {
-      return {
-        message: 'Um dispositivo com esse _id já foi cadastrado!',
-      };
+      throw new HttpException(
+        { reason: 'Um dispositivo com esse _id já foi cadastrado!' },
+        HttpStatus.CONFLICT,
+      );
     } else {
       const authorization = request.headers.authorization;
       const token = authorization.split('Bearer ');
