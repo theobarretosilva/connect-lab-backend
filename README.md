@@ -209,6 +209,11 @@ GET: http://localhost:3000/devices/allDevices
 Headers: {
 	"Authorization": "Bearer token"
 }
+ou
+GET: http://localhost:3000/devices/allDevices?local=sala
+Headers: {
+	"Authorization": "Bearer token"
+}
 ```
 
 **Resultado**
@@ -238,6 +243,33 @@ Headers: {
 		"macAddress": "127.0.0.1",
 		"local": "Quarto",
 		"grouping": "Casa de praia"
+	}
+]
+ou
+[
+	{
+		"_id": 25,
+		"name": "Lâmpada LED",
+		"type": "Energia",
+		"madeBy": "Intelbras",
+		"isOn": false,
+		"info": "Lâmpada da suite 1",
+		"ipAddress": "127.0.0.1",
+		"macAddress": "127.0.0.1",
+		"local": "Quarto",
+		"grouping": "Sala de estar"
+	},
+	{
+		"_id": 26,
+		"name": "Lâmpada LED",
+		"type": "Energia",
+		"madeBy": "Intelbras",
+		"isOn": false,
+		"info": "Lâmpada da suite 1",
+		"ipAddress": "127.0.0.1",
+		"macAddress": "127.0.0.1",
+		"local": "Quarto",
+		"grouping": "Sala de jogos"
 	}
 ]
 ```
