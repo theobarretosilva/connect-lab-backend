@@ -179,3 +179,27 @@ Body: {
 	"message": "Dispositivo adicionado com sucesso!"
 }
 ```
+
+### Detalhar dispositivo do usuário:
+
+```
+GET: http://localhost:3000/devices/detailDevice/:id
+Headers: {
+	"Authorization": "Bearer token"
+}
+```
+**Resultado**
+
+```
+{
+	"name": "Lâmpada theo",
+	"type": "Energia",
+	"madeBy": "Intelbras",
+	"isOn": false,
+	"info": "Lâmpada da suite 1",
+	"ipAddress": "127.0.0.1",
+	"macAddress": "127.0.0.1"
+}
+```
+
+### 
