@@ -15,7 +15,7 @@ export class UsersService {
   ) {}
 
   async changePassword(userPayload: any, changePasswordDTO: ChangePasswordDTO) {
-    return new Promise(async (resolve) => {
+    return new Promise(async (resolve, reject) => {
       const { email, oldPassword, newPassword } = changePasswordDTO;
 
       const foundUser = await this.userRepository.findOne({
@@ -24,13 +24,14 @@ export class UsersService {
         },
       });
 
-      const hashPassword = bcrypt.hash(newPassword, foundUser.salt);
+      const hashPassword = await bcrypt.hash(newPassword, foundUser.salt);
 
       if (
         foundUser.email == email &&
         (await foundUser.checkPassword(oldPassword))
       ) {
-        await this.userRepository.update(
+        console.log(hashPassword);
+        const changePassword = await this.userRepository.update(
           {
             _id: userPayload.id,
           },
@@ -38,9 +39,12 @@ export class UsersService {
             password: hashPassword,
           },
         );
-        // foundUser.password = hashPassword;
-        // await this.userRepository.save(foundUser);
-        // resolve(savePassword);
+        resolve(changePassword);
+      } else if (
+        foundUser.email != email ||
+        !(await foundUser.checkPassword(oldPassword))
+      ) {
+        reject('Algo não foi preenchido corretamente!');
       }
     });
   }

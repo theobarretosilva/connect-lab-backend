@@ -66,6 +66,7 @@ export class DevicesService {
         user_id: userPayload.id,
       },
     });
+    console.log(foundDevices);
 
     if (local) {
       return foundDevices.filter((value) => {
