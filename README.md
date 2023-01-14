@@ -202,4 +202,42 @@ Headers: {
 }
 ```
 
-### 
+### Listar todos os dispositivos do usuário:
+
+```
+GET: http://localhost:3000/devices/allDevices
+Headers: {
+	"Authorization": "Bearer token"
+}
+```
+
+**Resultado**
+
+```
+[
+	{
+		"_id": 25,
+		"name": "Lâmpada LED",
+		"type": "Energia",
+		"madeBy": "Intelbras",
+		"isOn": false,
+		"info": "Lâmpada da suite 1",
+		"ipAddress": "127.0.0.1",
+		"macAddress": "127.0.0.1",
+		"local": "Quarto",
+		"grouping": "Casa de praia"
+	},
+	{
+		"_id": 26,
+		"name": "Lâmpada LED",
+		"type": "Energia",
+		"madeBy": "Intelbras",
+		"isOn": false,
+		"info": "Lâmpada da suite 1",
+		"ipAddress": "127.0.0.1",
+		"macAddress": "127.0.0.1",
+		"local": "Quarto",
+		"grouping": "Casa de praia"
+	}
+]
+```
