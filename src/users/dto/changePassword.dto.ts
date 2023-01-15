@@ -7,15 +7,23 @@ export class ChangePasswordDTO {
   @IsEmail(undefined, { message: 'O e-mail informado não é válido!' })
   readonly email: string;
 
-  // @IsNotEmpty({ message: 'A senha é um campo obrigatório!' })
-  // @IsString({ message: 'A senha deve ser uma string!' })
-  // @MinLength(8, { message: 'A senha deve ter no mínimo 8 caracteres!' })
+  @IsNotEmpty({ message: 'A senha antiga é um campo obrigatório!' })
+  @IsString({ message: 'A senha antiga deve ser uma string!' })
+  @MinLength(8, { message: 'A senha antiga deve ter no mínimo 8 caracteres!' })
   readonly oldPassword: string;
 
-  @IsString()
+  @IsNotEmpty({ message: 'A senha nova é um campo obrigatório!' })
+  @IsString({ message: 'A senha nova deve ser uma string!' })
+  @MinLength(8, { message: 'A senha nova deve ter no mínimo 8 caracteres!' })
   readonly newPassword: string;
 
-  @IsString()
+  @IsNotEmpty({
+    message: 'A confirmação da senha nova é um campo obrigatório!',
+  })
+  @IsString({ message: 'A confirmação da senha nova deve ser uma string!' })
+  @MinLength(8, {
+    message: 'A confirmação da senha nova deve ter no mínimo 8 caracteres!',
+  })
   @Match('newPassword', {
     message: 'As suas novas senhas não estão iguais, revise-as!',
   })

@@ -60,13 +60,11 @@ export class DevicesService {
   }
 
   async allDevices(userPayload: any, local?: string) {
-    console.log(userPayload.id);
     const foundDevices = await this.deviceRepository.find({
       where: {
         user_id: userPayload.id,
       },
     });
-    console.log(foundDevices);
 
     if (local) {
       return foundDevices.filter((value) => {

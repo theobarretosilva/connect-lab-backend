@@ -43,8 +43,6 @@ export class AuthService {
       user.phone = phone;
       user.address = address;
       const userCreated = this.userRepository.save(user);
-      // delete user.password;
-      // delete user.salt;
       resolve(userCreated);
     });
   }

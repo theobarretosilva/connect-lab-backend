@@ -30,7 +30,6 @@ export class UsersService {
         foundUser.email == email &&
         (await foundUser.checkPassword(oldPassword))
       ) {
-        console.log(hashPassword);
         const changePassword = await this.userRepository.update(
           {
             _id: userPayload.id,
